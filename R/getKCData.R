@@ -1,9 +1,22 @@
 # May need to change base url
 # have to use arcgis - zip downloads no longer maintained
 
+#' Get Base Url
+#' @export
 get_base_url <- function(){
   "https://services6.arcgis.com/qt3UCV9x5kB4CwRA/arcgis/rest/services/"
 }
+
+#' Get Dataset Name
+#'
+#' @param data_wanted string of what is desired
+#' is not exhaustive
+#' Defaults to outline
+#'
+#' @export
+#'
+#' @examples
+#' get_dataset_name
 get_dataset_name <- function(data_wanted = "outline"){
   case_when(
     grepl("street|road", data_wanted) ~ "Street_Center_Line",
@@ -13,6 +26,17 @@ get_dataset_name <- function(data_wanted = "outline"){
   )
 }
 
+#' Get Data Details
+#'
+#' @param dataset_name string of valid data name
+#' Can use `get_dataset_name()` to find it.
+#' Or browse `https://kitsap-od-kitcowa.hub.arcgis.com` until you find it.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' get_data_details()
 get_data_details <- function(dname = "Kitsap_County_Outline"){
   qpath <- paste0(get_base_url(), dname, "/FeatureServer/0/?f=json")
   res_json <- httr2::request(qpath) %>%
@@ -35,7 +59,7 @@ get_data_details <- function(dname = "Kitsap_County_Outline"){
 
 #' Get KC Data
 #'
-#' @param dname string of valid data.
+#' @param dataset_name string of valid data name
 #' Can use `get_dataset_name()` to find it.
 #' Or browse `https://kitsap-od-kitcowa.hub.arcgis.com` until you find it.
 #'
@@ -45,10 +69,10 @@ get_data_details <- function(dname = "Kitsap_County_Outline"){
 #' @export
 #'
 #' @examples
-#' outline <- get_kc_data(dname = "Kitsap_County_Outline")
-get_kc_data <- function(dname = "Kitsap_County_Outline"){
+#' outline <- get_kc_data("Kitsap_County_Outline")
+get_kc_data <- function(dataset_name = "Kitsap_County_Outline"){
   end_path <- "/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json"
-  sf::read_sf(paste0(get_base_url(), dname, end_path))
+  sf::read_sf(paste0(get_base_url(), dataset_name, end_path))
 }
 
 
