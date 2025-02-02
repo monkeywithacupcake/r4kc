@@ -1,6 +1,6 @@
 Package: r4kc
 Title: Handle Kitsap County data in R.
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Jess", "Chandler", , "first.last@example.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9331-5009"))
@@ -8,7 +8,7 @@ Description: Reads in and creates maps from Kitsap County GIS data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
 Suggests: 
     ggplot2,
     patchwork,

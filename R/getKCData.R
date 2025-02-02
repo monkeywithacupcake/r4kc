@@ -32,7 +32,7 @@ get_dataset_name <- function(data_wanted = "outline"){
 #' Can use `get_dataset_name()` to find it.
 #' Or browse `https://kitsap-od-kitcowa.hub.arcgis.com` until you find it.
 #'
-#' @return
+#' @return list of fields, type, and batches
 #' @export
 #'
 #' @examples
