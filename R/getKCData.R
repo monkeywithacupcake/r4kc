@@ -13,12 +13,13 @@ get_base_url <- function(){
 #' is not exhaustive
 #' Defaults to outline
 #'
+#' @importFrom dplyr case_when
 #' @export
 #'
 #' @examples
 #' get_dataset_name
 get_dataset_name <- function(data_wanted = "outline"){
-  case_when(
+  dplyr::case_when(
     grepl("street|road", data_wanted) ~ "Street_Center_Line",
     grepl("citi|city|uga|urban", data_wanted) ~ "Designated_Urban_Growth_Areas",
     grepl("bocc|commiss", data_wanted) ~ "County_Commissioner_District_Outlines",
