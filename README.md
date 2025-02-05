@@ -32,7 +32,7 @@ commiss <- get_kc_data(get_dataset_name("commission"))
 You can pull these data down and make a quick map.
 
 ``` r
-library(tidyverse)
+library(tidyverse, quietly = TRUE)
 #> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 #> ✔ dplyr     1.1.4     ✔ readr     2.1.5
 #> ✔ forcats   1.0.0     ✔ stringr   1.5.1
@@ -46,13 +46,13 @@ library(tidyverse)
 ```
 
 ``` r
-library(r4kc)
-library(sf)
+library(r4kc, quietly = TRUE)
+library(sf, quietly = TRUE)
 #> Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
 ```
 
 ``` r
-
+outline <- get_kc_data("Kitsap_County_Outline")
 uga <- get_kc_data(get_dataset_name("uga"))
 cities_and_uga <- uga %>%
   mutate(type = ifelse(grepl("City ", GMA_JURISDICTION), "City", "UGA")) %>%
@@ -62,6 +62,7 @@ cities_and_uga <- uga %>%
   select(jurisdiction)
 
 ggplot() +
+  geom_sf(data = outline) +
   geom_sf(data = cities_and_uga, aes(fill = jurisdiction)) +
   labs(title = "Cities and UGA in Kitsap County") +
   theme_void()
