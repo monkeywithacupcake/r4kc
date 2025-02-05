@@ -1,0 +1,66 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# r4kc
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of r4kc is to simplify reading and using data posted by Kitsap County in R. 
+
+## Installation
+
+You can install the development version of r4kc from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("monkeywithacupcake/r4kc")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(r4kc)
+# this will return the three commissioner districts as an sf
+commiss <- get_kc_data(get_dataset_name("commission"))
+```
+
+You can pull these data down and make a quick map.
+
+```{r}
+library(tidyverse)
+library(r4kc)
+library(sf)
+
+uga <- get_kc_data(get_dataset_name("uga"))
+cities_and_uga <- uga %>%
+  mutate(type = ifelse(grepl("City ", GMA_JURISDICTION), "City", "UGA")) %>%
+  group_by(type, jurisdiction = GMA_JURISDICTION) %>%
+  summarize(geometry = st_union(geometry),
+            .groups = "drop") %>%
+  select(jurisdiction)
+
+ggplot() +
+  geom_sf(data = cities_and_uga, aes(fill = jurisdiction)) +
+  labs(title = "Cities and UGA in Kitsap County") +
+  theme_void()
+
+```
+
+
+You can do more extensive analysis - combining with census or transit or other kitsap county data. This is especially useful if you want to limit an analysis to a particular area in Kitsap County, for example. 
+
