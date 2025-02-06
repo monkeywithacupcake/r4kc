@@ -43,10 +43,13 @@ exclude_cities <- function(sf_poly, sf_cities, match_col){
 #'
 #' @importFrom dplyr left_join mutate select
 #' @importFrom sf st_area st_length st_drop_geometry
-#' @return
+#' @returns sf with a new column size_portion
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' out_sf <- add_geometry_portion(sf_poly, out_sf, match_col = "someid")
+#' }
 add_geometry_portion <- function(sf_big, sf_small,
                                  match_col) {
   big_type <- as.character(st_geometry_type(sf_big))[1]
